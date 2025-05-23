@@ -2,7 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useEffect } from 'react'; // Changed from react-dom
+import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -18,7 +19,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ProjectSubmissionSchema, type ProjectSubmissionFormValues } from '@/lib/schemas';
 import { submitProjectAction, type SubmitProjectActionResult } from '@/app/(app)/submit-project/actions';
-import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 
@@ -38,7 +38,7 @@ function SubmitButton() {
 }
 
 export default function ProjectSubmissionForm() {
-  const [state, formAction] = useFormState(submitProjectAction, initialState);
+  const [state, formAction] = useActionState(submitProjectAction, initialState); // Renamed useFormState to useActionState
   const { toast } = useToast();
 
   const form = useForm<ProjectSubmissionFormValues>({

@@ -2,7 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useEffect } from 'react'; // Changed from react-dom
+import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -17,7 +18,6 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AiSuggestionsSchema, type AiSuggestionsFormValues } from '@/lib/schemas';
 import { getAiSuggestionsAction, type AiSuggestionsActionResult } from '@/app/(app)/ai-suggestions/actions';
-import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Lightbulb, Code } from 'lucide-react';
 
@@ -36,7 +36,7 @@ function SuggestionSubmitButton() {
 }
 
 export default function AiSuggestions() {
-  const [state, formAction] = useFormState(getAiSuggestionsAction, initialState);
+  const [state, formAction] = useActionState(getAiSuggestionsAction, initialState); // Renamed useFormState to useActionState
   const { toast } = useToast();
 
   const form = useForm<AiSuggestionsFormValues>({
